@@ -65,7 +65,5 @@
     "test": "npm run lint && echo \"you need tests\" && exit 1",
     "dev": "./node_modules/.bin/webpack --watch --progress --display-error-details",
     "build": "NODE_ENV=production ./node_modules/.bin/webpack -p --progress --display-error-details",
-    "postinstall": "npm run build",
-    "start": "pm2 start ./index.js -i 0 --name=\"misconfiguredProject\""
   }
 }
