@@ -64,6 +64,6 @@
     "lint": "npm run lint:less && npm run lint:js",
     "test": "npm run lint && echo \"you need tests\" && exit 1",
     "dev": "./node_modules/.bin/webpack --watch --progress --display-error-details",
-    "build": "NODE_ENV=production ./node_modules/.bin/webpack -p --progress --display-error-details",
+    "build": "NODE_ENV=production ./node_modules/.bin/webpack -p --progress --display-error-details"
   }
 }
