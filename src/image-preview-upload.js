@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DropZone from './drop-zone.js';
+import DropZone from './views/drop-zone.js';
 import EventTravel from '../lib/event-travel.js';
 import ImageHandler from '../lib/image-handler.js';
 import velocity from 'velocity-animate';

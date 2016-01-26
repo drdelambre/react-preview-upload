@@ -4,8 +4,9 @@
   "author": "drdelambre <drdelambre@gmail.com>",
   "license": "MIT",
   "version": "1.0.0",
-  "main": "dist/views/image-preview-upload.js",
-  "files": ["dist/image-preview-upload.css"],
+  "main": "dist/image-preview-upload.js",
+  "files": ["css"],
+  "style": "dist/image-preview-upload.css",
   "peerDependencies": {
     "react": "^0.14.0"
   },
