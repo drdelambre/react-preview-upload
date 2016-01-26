@@ -45,11 +45,13 @@ class ImageHandler {
     _zoom = 0;
     _translate = {
         x: 0,
-        y: 0
+        y: 0,
+        r: 0
     };
     _offset = {
         x: 0,
-        y: 0
+        y: 0,
+        r: 0
     };
 
     constructor() {
@@ -189,13 +191,22 @@ class ImageHandler {
             return;
         }
 
-        this._translate.x = point.x;
-        this._translate.y = point.y;
+        if (point.hasOwnProperty('x')) {
+            this._translate.x = point.x;
+        }
+
+        if (point.hasOwnProperty('y')) {
+            this._translate.y = point.y;
+        }
+
+        if (point.hasOwnProperty('r')) {
+            this._translate.r = point.r;
+        }
 
         this.draw();
     }
 
-    offset() {
+    commitTranslation() {
         if (!this.img) {
             return;
         }
@@ -206,8 +217,12 @@ class ImageHandler {
 
         this._offset.x += this._translate.x;
         this._offset.y += this._translate.y;
+        this._offset.r += this._translate.r;
+
         this._translate.x = 0;
         this._translate.y = 0;
+        this._translate.r = 0;
+
         this._offset = this.hardTranslate();
 
         this.draw();

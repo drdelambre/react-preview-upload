@@ -103,7 +103,7 @@ class ImagePreviewUpload extends React.Component {
             this.fileInputEl.value = null;
             this.fileInputEl.click();
         } else {
-            this.image.offset();
+            this.image.commitTranslation();
             this.setState({
                 moving: false
             });
