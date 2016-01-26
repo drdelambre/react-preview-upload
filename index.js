@@ -10,6 +10,10 @@ if (process.env.BROWSER) {
 }
 
 class ImagePreviewUpload extends React.Component {
+    static defaultProps = {
+        scale: 0.5
+    };
+
     state = {
         loading: false,
         moving: false
@@ -28,7 +32,8 @@ class ImagePreviewUpload extends React.Component {
     componentDidMount() {
         this.node = ReactDOM.findDOMNode(this);
         this.node.appendChild(this.image.scaledOriginal);
-        this.image.scaledOriginal.style.transform = 'scale(0.5)';
+        this.image.scaledOriginal.style.transform = 'scale(' +
+            this.props.scale + ')';
         this.node.appendChild(this.image.canvas);
 
         this.enterCounter = 0;
@@ -39,14 +44,13 @@ class ImagePreviewUpload extends React.Component {
     }
 
     updateImage() {
+        const translate = this.image.hardTranslate();
+
         if (this.state.loading) {
             this.setState({
                 loading: false
             });
         }
-
-        const scale = this.props.scale || 0.5,
-            translate = this.image.hardTranslate();
 
         if (!this.node) {
             return;
@@ -54,10 +58,10 @@ class ImagePreviewUpload extends React.Component {
 
         this.image.scaledOriginal
             .style.marginLeft = ((this.image.img.width *
-                this.image._zoom / -2) + translate.x) * scale;
+                this.image._zoom / -2) + translate.x) * this.props.scale;
         this.image.scaledOriginal
             .style.marginTop = ((this.image.img.height *
-                this.image._zoom / -2) + translate.y) * scale;
+                this.image._zoom / -2) + translate.y) * this.props.scale;
     }
 
     down(evt) {
@@ -145,10 +149,15 @@ class ImagePreviewUpload extends React.Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
+        if (nextProps.scale !== this.props.scale) {
+            this.image.scaledOriginal.style.transform = 'scale(' +
+                nextProps.scale + ')';
+        }
+
         if (nextState.moving !== this.state.moving) {
             if (nextState.moving) {
                 velocity(this.image.canvas, {
-                    scale: 0.5
+                    scale: this.props.scale
                 }, 200, [ 100, 15 ]);
             } else {
                 velocity(this.image.canvas, {
