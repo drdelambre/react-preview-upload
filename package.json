@@ -5,6 +5,7 @@
   "license": "MIT",
   "version": "1.0.0",
   "main": "dist/views/image-preview-upload.js",
+  "files": ["dist/image-preview-upload.css"],
   "peerDependencies": {
     "react": "^0.14.0"
   },
