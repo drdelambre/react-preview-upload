@@ -1,10 +1,10 @@
 {
   "name": "react-preview-upload",
-  "description": "A small image preview and cropper for previewing an image upload",
+  "description": "A client side image preview and cropper for files before upload",
   "author": "drdelambre <drdelambre@gmail.com>",
   "license": "MIT",
   "version": "1.0.0",
-  "main": "./dist/views/image-upload-preview.js",
+  "main": "./dist/views/image-preview-upload.js",
   "peerDependencies": {
     "react": "^0.14.0"
   },
