@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import DropZone from './drop-zone.jsx';
 import EventTravel from './event-travel.js';
 import ImageHandler from './image-handler.js';
-import DragPreview from './drag-preview.jsx';
 import velocity from 'velocity-animate';
 
 if (process.env.BROWSER) {
@@ -28,6 +27,8 @@ class ImagePreviewUpload extends React.Component {
 
     componentDidMount() {
         this.node = ReactDOM.findDOMNode(this);
+        this.node.appendChild(this.image.scaledOriginal);
+        this.image.scaledOriginal.style.transform = 'scale(0.5)';
         this.node.appendChild(this.image.canvas);
 
         this.enterCounter = 0;
@@ -40,10 +41,23 @@ class ImagePreviewUpload extends React.Component {
     updateImage() {
         if (this.state.loading) {
             this.setState({
-                loading: false,
-                moving: true
+                loading: false
             });
         }
+
+        const scale = this.props.scale || 0.5,
+            translate = this.image.hardTranslate();
+
+        if (!this.node) {
+            return;
+        }
+
+        this.image.scaledOriginal
+            .style.marginLeft = ((this.image.img.width *
+                this.image._zoom / -2) + translate.x) * scale;
+        this.image.scaledOriginal
+            .style.marginTop = ((this.image.img.height *
+                this.image._zoom / -2) + translate.y) * scale;
     }
 
     down(evt) {
@@ -145,18 +159,10 @@ class ImagePreviewUpload extends React.Component {
     }
 
     render() {
-        let loader, preview;
+        let loader;
 
         if (this.state.loading) {
             loader = <div className="loading">{ this.props.loader }</div>;
-        }
-
-        if (this.state.moving) {
-            preview = (
-                <DragPreview
-                    image={ this.image }
-                    scale={ 0.5 } />
-                );
         }
 
         return (
@@ -167,7 +173,6 @@ class ImagePreviewUpload extends React.Component {
                 <input type="file"
                     ref={ (el) => this.fileInputEl = el }
                     onChange={ this.onDrop.bind(this) } />
-                { preview }
                 { loader }
             </div>
         );

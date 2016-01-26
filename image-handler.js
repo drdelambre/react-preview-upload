@@ -37,6 +37,7 @@ function observer() {
 class ImageHandler {
     change = null;
     canvas = null;
+    scaledOriginal = null;
 
     minWidth = 0;
     minHeight = 0;
@@ -55,6 +56,7 @@ class ImageHandler {
         this.change = observer();
 
         this.canvas = document.createElement('canvas');
+        this.scaledOriginal = document.createElement('canvas');
     }
 
     minSize(w, h) {
@@ -84,6 +86,18 @@ class ImageHandler {
         this.change.fire();
     }
 
+    drawScaledOriginal() {
+        let ctx;
+
+        this.scaledOriginal.width = this.img.width * this._zoom;
+        this.scaledOriginal.height = this.img.height * this._zoom;
+        ctx = this.scaledOriginal.getContext('2d');
+        ctx.save();
+        ctx.scale(this._zoom, this._zoom);
+        ctx.drawImage(this.img, 0, 0);
+        ctx.restore();
+    }
+
     setFile(file) {
         const reader = new FileReader(),
             img = document.createElement('img');
@@ -104,6 +118,7 @@ class ImageHandler {
             this.hardZoom();
 
             this.draw();
+            this.drawScaledOriginal();
         }.bind(this);
 
         reader.onload = function(evt) {
@@ -202,6 +217,7 @@ class ImageHandler {
         this._zoom += by;
         this.hardZoom();
         this.draw();
+        this.drawScaledOriginal();
     }
 }
 
