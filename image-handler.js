@@ -68,17 +68,6 @@ class ImageHandler {
         const ctx = this.canvas.getContext('2d'),
             t = this.hardTranslate();
 
-        if (
-            this.lastZoom === this._zoom &&
-            this.lastTranslate.x === t.x &&
-            this.lastTranslate.y === t.y
-        ) {
-            return;
-        }
-
-        this.lastZoom = this._zoom;
-        this.lastTranslate = t;
-
         this.canvas.width = this.minWidth;
         this.canvas.height = this.minHeight;
 
@@ -192,8 +181,16 @@ class ImageHandler {
     }
 
     offset() {
-        this._offset.x = this._translate.x;
-        this._offset.y = this._translate.y;
+        if (!this.img) {
+            return;
+        }
+
+        if (!this.minWidth || !this.minHeight) {
+            return;
+        }
+
+        this._offset.x += this._translate.x;
+        this._offset.y += this._translate.y;
         this._translate.x = 0;
         this._translate.y = 0;
         this._offset = this.hardTranslate();

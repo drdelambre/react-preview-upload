@@ -7,6 +7,9 @@
   "peerDependencies": {
     "react": "^0.14.0"
   },
+  "dependencies": {
+    "velocity-animate": "^1.2.3"
+  },
   "devDependencies": {
     "babel-core": "^6.4.0",
     "babel-eslint": "^5.0.0-beta6",
@@ -21,8 +24,7 @@
     "less": "^2.5.0",
     "less-loader": "^2.2.0",
     "react": "^0.14.0",
-    "react-dom": "^0.14.0",
-    "velocity-animate": "^1.2.3"
+    "react-dom": "^0.14.0"
   },
   "scripts": {
     "lint:less": "./node_modules/.bin/lesshint -c ./tests/config/lint-less.json -r ./tests/config/less-reporter.js ./src/",

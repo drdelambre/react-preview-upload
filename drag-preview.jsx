@@ -56,13 +56,17 @@ class DragPreview extends React.Component {
     }
 
     render() {
-        const imageStyle = {
-            width: this.state.imgWidth,
-            height: this.state.imgHeight,
-            marginLeft: (this.state.imgWidth / -2) + this.state.imgDeltaX,
-            marginTop: (this.state.imgHeight / -2) + this.state.imgDeltaY,
-            backgroundImage: 'url(' + this.props.image.img.toDataURL() + ')'
-        };
+        let imageStyle = {};
+
+        if (this.props.image.img) {
+            imageStyle = {
+                width: this.state.imgWidth,
+                height: this.state.imgHeight,
+                marginLeft: (this.state.imgWidth / -2) + this.state.imgDeltaX,
+                marginTop: (this.state.imgHeight / -2) + this.state.imgDeltaY,
+                backgroundImage: 'url(' + this.props.image.img.toDataURL() + ')'
+            };
+        }
 
         return (
             <div className="drag-preview">

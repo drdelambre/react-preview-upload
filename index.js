@@ -53,6 +53,12 @@ class ImagePreviewUpload extends React.Component {
 
         this.startEvt = new EventTravel(evt);
 
+        if (this.image.img) {
+            this.autoOpen = setTimeout(function() {
+                this.setState({ moving: true });
+            }.bind(this), 200);
+        }
+
         window.addEventListener('mousemove', this.boundMove, false);
         window.addEventListener('mouseup', this.boundEnd, false);
     }
@@ -61,6 +67,11 @@ class ImagePreviewUpload extends React.Component {
         evt.preventDefault();
         this.image.translate(this.startEvt.diff(evt));
 
+        if (this.autoOpen) {
+            clearTimeout(this.autoOpen);
+            this.autoOpen = null;
+        }
+
         if (this.startEvt.dist(evt) > 5) {
             this.setState({
                 moving: true
@@ -68,8 +79,13 @@ class ImagePreviewUpload extends React.Component {
         }
     }
 
-    end(evt) {
-        if (this.startEvt.dist(evt) < 5) {
+    end() {
+        if (this.autoOpen) {
+            clearTimeout(this.autoOpen);
+            this.autoOpen = null;
+        }
+
+        if (!this.state.moving) {
             this.fileInputEl.value = null;
             this.fileInputEl.click();
         } else {
@@ -118,12 +134,12 @@ class ImagePreviewUpload extends React.Component {
         if (nextState.moving !== this.state.moving) {
             if (nextState.moving) {
                 velocity(this.image.canvas, {
-                    scale: 0.25
-                }, 200, [ 100, 12 ]);
+                    scale: 0.5
+                }, 200, [ 100, 15 ]);
             } else {
                 velocity(this.image.canvas, {
                     scale: 1
-                }, 200, [ 100, 12 ]);
+                }, 200, [ 100, 15 ]);
             }
         }
     }
@@ -139,7 +155,7 @@ class ImagePreviewUpload extends React.Component {
             preview = (
                 <DragPreview
                     image={ this.image }
-                    scale={ 0.25 } />
+                    scale={ 0.5 } />
                 );
         }
 
