@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DropZone from './drop-zone.jsx';
-import EventTravel from './event-travel.js';
-import ImageHandler from './image-handler.js';
+import DropZone from './drop-zone.js';
+import EventTravel from '../lib/event-travel.js';
+import ImageHandler from '../lib/image-handler.js';
 import velocity from 'velocity-animate';
-
-if (process.env.BROWSER) {
-    require('./image-preview-upload.less');
-}
 
 class ImagePreviewUpload extends React.Component {
     static defaultProps = {
